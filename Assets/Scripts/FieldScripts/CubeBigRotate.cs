@@ -1,3 +1,5 @@
+// Copyright 2023. Jiwon-Nam All right reserved.
+
 using UnityEngine;
 
 namespace FieldScripts
@@ -10,20 +12,20 @@ namespace FieldScripts
 		[SerializeField]
 		public float speed = 200.0f;
 	
-		public Vector2 getFirstPress(){ return mFirstPressPos; }
-		public void setFirstPress(Vector2 firstPress){ mFirstPressPos = firstPress; }
+		public Vector2 GetFirstPress(){ return mFirstPressPos; }
+		public void SetFirstPress(Vector2 firstPress){ mFirstPressPos = firstPress; }
 	
-		public Vector2 getSecondPress(){ return mSecondPressPos; }
+		public Vector2 GetSecondPress(){ return mSecondPressPos; }
 		public void setSecondPress(Vector2 secondPress){ mSecondPressPos = secondPress; }
 
-		public Vector2 getCurrentSwipe(){ return mCurrentSwipe; }
-		public void setCurrentSwipe(Vector2 currentSwipe){ mCurrentSwipe = currentSwipe; }
+		public Vector2 GetCurrentSwipe(){ return mCurrentSwipe; }
+		public void SetCurrentSwipe(Vector2 currentSwipe){ mCurrentSwipe = currentSwipe; }
 	
-		public Vector3 getPreviousMousePos(){ return mPreviosMousePos; }
-		public void setPreviousMousePos(Vector3 preMousePos){ mPreviosMousePos = preMousePos; }
+		public Vector3 GetPreviousMousePos(){ return mPreviosMousePos; }
+		public void SetPreviousMousePos(Vector3 preMousePos){ mPreviosMousePos = preMousePos; }
 	
-		public Vector3 getMouseDelta(){ return mMouseDelta; }
-		public void setMouseDelta(Vector3 mouseDelta){ mMouseDelta = mouseDelta; }
+		public Vector3 GetMouseDelta(){ return mMouseDelta; }
+		public void SetMouseDelta(Vector3 mouseDelta){ mMouseDelta = mouseDelta; }
 	
 		private Vector2 mFirstPressPos;
 		private Vector2 mSecondPressPos;
@@ -33,11 +35,11 @@ namespace FieldScripts
 
 		private void Update()
 		{
-			swipe();
-			drag();
+			Swipe();
+			Drag();
 		}
 
-		private void drag()
+		private void Drag()
 		{
 			if (Input.GetMouseButton(1))
 			{
@@ -46,17 +48,17 @@ namespace FieldScripts
 
 				mMouseDelta *= 0.1f;
 				
-				if (leftSwipe(dragVector) || rightSwipe(dragVector))
+				if (LeftSwipe(dragVector) || RightSwipe(dragVector))
 				{
 					transform.rotation
 						= Quaternion.Euler(0, -mMouseDelta.x, 0) * transform.rotation;
 				}
-				else if (upLeftSwipe(dragVector) || downRightSwipe(dragVector))
+				else if (UpLeftSwipe(dragVector) || DownRightSwipe(dragVector))
 				{
 					transform.rotation
 						= Quaternion.Euler(mMouseDelta.y, 0, 0) * transform.rotation;
 				}
-				else if (upRightSwipe(dragVector) || downLeftSwipe(dragVector))
+				else if (UpRightSwipe(dragVector) || DownLeftSwipe(dragVector))
 				{
 					transform.rotation
 						= Quaternion.Euler(0, 0, -mMouseDelta.y) * transform.rotation;
@@ -75,7 +77,7 @@ namespace FieldScripts
 			mPreviosMousePos = Input.mousePosition;
 		}
 
-		private void swipe()
+		private void Swipe()
 		{
 			if (Input.GetMouseButtonDown(1))
 			{
@@ -89,59 +91,59 @@ namespace FieldScripts
 				mCurrentSwipe = new Vector2(mSecondPressPos.x - mFirstPressPos.x, mSecondPressPos.y - mFirstPressPos.y);
 				mCurrentSwipe.Normalize();
 
-				if (leftSwipe(mCurrentSwipe))
+				if (LeftSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(0, 90, 0, Space.World);
 				}
-				else if (rightSwipe(mCurrentSwipe))
+				else if (RightSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(0, -90, 0, Space.World);
 				}
-				else if (upLeftSwipe(mCurrentSwipe))
+				else if (UpLeftSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(90, 0, 0, Space.World);
 				}
-				else if (upRightSwipe(mCurrentSwipe))
+				else if (UpRightSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(0, 0, -90, Space.World);
 				}
-				else if (downLeftSwipe(mCurrentSwipe))
+				else if (DownLeftSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(0, 0, 90, Space.World);
 				}
-				else if (downRightSwipe(mCurrentSwipe))
+				else if (DownRightSwipe(mCurrentSwipe))
 				{
 					target.transform.Rotate(-90, 0, 0, Space.World);
 				}
 			}
 		}
 
-		private bool leftSwipe(Vector2 swipe)
+		private bool LeftSwipe(Vector2 swipe)
 		{
 			return swipe.x < 0 && swipe.y > -0.5f && swipe.y < 0.5f;
 		}
 	
-		private bool rightSwipe(Vector2 swipe)
+		private bool RightSwipe(Vector2 swipe)
 		{
 			return swipe.x > 0 && swipe.y > -0.5f && swipe.y < 0.5f;
 		}
 	
-		private bool upLeftSwipe(Vector2 swipe)
+		private bool UpLeftSwipe(Vector2 swipe)
 		{
 			return swipe.y > 0 && swipe.x < 0.0f;
 		}
 	
-		private bool upRightSwipe(Vector2 swipe)
+		private bool UpRightSwipe(Vector2 swipe)
 		{
 			return swipe.y > 0 && swipe.x > 0.0f;
 		}
 	
-		private bool downLeftSwipe(Vector2 swipe)
+		private bool DownLeftSwipe(Vector2 swipe)
 		{
 			return swipe.y < 0 && swipe.x < 0.0f;
 		}
 	
-		private bool downRightSwipe(Vector2 swipe)
+		private bool DownRightSwipe(Vector2 swipe)
 		{
 			return swipe.y < 0 && swipe.x > 0.0f;
 		}

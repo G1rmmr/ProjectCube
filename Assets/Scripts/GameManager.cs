@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-	// 싱글톤 패턴을 사용하기 위한 인스턴스 변수
+	/*
+	 *
+	 * // 싱글톤 패턴을 사용하기 위한 인스턴스 변수
 	private static GameManager mInstance = null;
 	// 인스턴스에 접근하기 위한 프로퍼티
 	public static GameManager Instance
@@ -41,6 +43,8 @@ public class GameManager : MonoBehaviour
 		// 아래의 함수를 사용하여 씬이 전환되더라도 선언되었던 인스턴스가 파괴되지 않는다.
 		DontDestroyOnLoad(gameObject);
 	}
+	 */
+	
 	public void ChangeToStart()
 	{
 		SceneManager.LoadScene("TestScene");

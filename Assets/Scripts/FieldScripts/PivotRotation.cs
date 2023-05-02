@@ -1,3 +1,5 @@
+// Copyright 2023. Jiwon-Nam All right reserved.
+
 using System.Collections.Generic;
 using UnityEngine;
 

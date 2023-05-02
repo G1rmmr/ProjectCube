@@ -1,3 +1,5 @@
+// Copyright 2023. Jiwon-Nam All right reserved.
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +22,7 @@ namespace FieldScripts
         {
             if (Input.GetMouseButtonDown(0))
             {
-                mReadCube.readState();
+                mReadCube.ReadState();
 
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

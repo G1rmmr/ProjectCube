@@ -1,3 +1,5 @@
+// Copyright 2023. Jiwon-Nam All right reserved.
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,23 +19,23 @@ namespace FieldScripts
 
         private void Start()
         {
-            setRayTransforms();
+            SetRayTransforms();
         
             mCubeState = FindObjectOfType<CubeState>();
             mLayerMask = 1 << 6;
         }
 
-        private void setRayTransforms()
+        private void SetRayTransforms()
         {
-            mUpRays = buildRays(tUp, new Vector3(90, 90, 0));
-            mDownRays = buildRays(tDown, new Vector3(-90, 90, 0));
-            mFrontRays = buildRays(tFront, new Vector3(0, 90, 0));
-            mBackRays = buildRays(tBack, new Vector3(0, -90, 0));
-            mLeftRays = buildRays(tLeft, new Vector3(0, 180, 0));
-            mRightRays = buildRays(tRight, new Vector3(0, 0, 0));
+            mUpRays = BuildRays(tUp, new Vector3(90, 90, 0));
+            mDownRays = BuildRays(tDown, new Vector3(-90, 90, 0));
+            mFrontRays = BuildRays(tFront, new Vector3(0, 90, 0));
+            mBackRays = BuildRays(tBack, new Vector3(0, -90, 0));
+            mLeftRays = BuildRays(tLeft, new Vector3(0, 180, 0));
+            mRightRays = BuildRays(tRight, new Vector3(0, 0, 0));
         }
 
-        private List<GameObject> buildRays(Transform rayTransform, Vector3 direction)
+        private List<GameObject> BuildRays(Transform rayTransform, Vector3 direction)
         {
             int rayCount = 0;
             List<GameObject> rays = new List<GameObject>();
@@ -77,10 +79,10 @@ namespace FieldScripts
         [SerializeField]
         public GameObject emptyGo;
 
-        public CubeState getCubeState() { return mCubeState; }
-        public void setCubeState(CubeState cubeState) { mCubeState = cubeState; }
+        public CubeState GetCubeState() { return mCubeState; }
+        public void SetCubeState(CubeState cubeState) { mCubeState = cubeState; }
 
-        public List<GameObject> readFace(List<GameObject> rayStarts, Transform rayTransform)
+        public List<GameObject> ReadFace(List<GameObject> rayStarts, Transform rayTransform)
         {
             List<GameObject> facesHit = new List<GameObject>();
 
@@ -103,16 +105,16 @@ namespace FieldScripts
             return facesHit;
         }
 
-        public void readState()
+        public void ReadState()
         {
             mCubeState = FindObjectOfType<CubeState>();
 
-            mCubeState.up = readFace(mUpRays, tUp);
-            mCubeState.down = readFace(mDownRays, tDown);
-            mCubeState.front = readFace(mFrontRays, tFront);
-            mCubeState.back = readFace(mBackRays, tBack);
-            mCubeState.left = readFace(mLeftRays, tLeft);
-            mCubeState.right = readFace(mRightRays, tRight);
+            mCubeState.up = ReadFace(mUpRays, tUp);
+            mCubeState.down = ReadFace(mDownRays, tDown);
+            mCubeState.front = ReadFace(mFrontRays, tFront);
+            mCubeState.back = ReadFace(mBackRays, tBack);
+            mCubeState.left = ReadFace(mLeftRays, tLeft);
+            mCubeState.right = ReadFace(mRightRays, tRight);
         }
     }
 }
