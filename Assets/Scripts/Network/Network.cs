@@ -2,16 +2,29 @@
 
 using System;
 using System.Collections;
-using System.IO;
-
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class Network : MonoBehaviour
 {
 	[SerializeField]
-	public string mAPIKey;
+	public string mAPIKey = "nam";
+
+	[System.Serializable]
+	public class DebugClients
+	{
+		public List<DebugData> player;
+	}
 	
+	[System.Serializable]
+	public class DebugData
+	{
+		public int id;
+		public string name;
+		public int money;
+	}
+
 	[System.Serializable]
 	public class LoginData
 	{
@@ -24,55 +37,51 @@ public class Network : MonoBehaviour
 	{
 		public int mRank;
 		public string mNickName;
-	}
-
-	public MemberData mClient;
+	} 
 
 	private void Start()
 	{
 		StartCoroutine(GetRequest());
-		Debug.Log(mClient.mRank);
-		
-		mClient.mNickName = "G1rmmr";
-		mClient.mRank = 0;
 		StartCoroutine(PostRequest());
 	}
-
+	
 	IEnumerator GetRequest()
 	{
-		string url = "https://" + mAPIKey;
+		string url = "http://15.165.55.55:8080/test/findByName?name=" + mAPIKey;
 		UnityWebRequest request = UnityWebRequest.Get(url);
 		
 		yield return request.SendWebRequest();
 
-		if (request.error == null)
+		if (request.error != null)
 		{
-			string json = request.downloadHandler.text;
-			mClient = JsonUtility.FromJson<MemberData>(json);
-			
-			Debug.Log(mClient.mNickName);
+			Debug.Log(request.error);
 		}
-		else
-		{
-			Debug.Log("ERROR!");
-		}
+		Debug.Log(request.downloadHandler.text);
 	}
 	
 	IEnumerator PostRequest()
 	{
-		string url = "https://";
-		string json = JsonUtility.ToJson(mClient);
+		string url = "http://15.165.55.55:8080/test/mockList";
 
-		UnityWebRequest request = UnityWebRequest.Post(url, json);
-		yield return request.SendWebRequest();
+		var form = new WWWForm();
+		form.AddField("pw", "admin");
 
-		if (request.error == null)
+		using (var request = UnityWebRequest.Post(url, form))
 		{
-			Debug.Log(request.downloadHandler.text);
-		}
-		else
-		{
-			Debug.Log("ERROR!");
+			yield return request.SendWebRequest();
+		
+			if (request.error != null)
+			{
+				Debug.Log(request.error);
+			}
+			Debug.Log(request.downloadHandler.text); 
+			
+			DebugClients debugClients = JsonUtility.FromJson<DebugClients>(request.downloadHandler.text);
+			
+			foreach (var client in debugClients.player)
+			{
+				Debug.Log(client.id.ToString() + ' ' + client.name + ' ' + client.money);
+			}
 		}
 	}
 }
