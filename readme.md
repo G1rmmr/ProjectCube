@@ -1,7 +1,7 @@
 <h1>"Project : CUBE"(제작중)</h1>
 
 <h2>개요</h2>
-<img src = "./Main Image.png">
+<img src = "./CUBE.jpg">
 <p><i>Unity 3D를 사용한 모바일 1 vs 1 퍼즐형 대전 게임</i>
 
 <h2>규칙 설명</h2>
