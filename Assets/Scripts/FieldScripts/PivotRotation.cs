@@ -16,7 +16,7 @@ namespace FieldScripts
             mLocalForward = Vector3.zero - side[4].transform.parent.transform.localPosition;
         }
 
-        public void rotateToRightAngle()
+        public void RotateToRightAngle()
         {
             Vector3 euler = transform.localEulerAngles;
 
@@ -60,22 +60,22 @@ namespace FieldScripts
         {
             if (mDragging)
             {
-                spinSide(mActiveSide);
+                SpinSide(mActiveSide);
 
                 if (Input.GetMouseButtonUp(0))
                 {
                     mDragging = false;
-                    rotateToRightAngle();
+                    RotateToRightAngle();
                 }
             }
 
             if (mAutoRotating)
             {
-                autoRotate();
+                AutoRotate();
             }
         }
         
-        private void spinSide(List<GameObject> side)
+        private void SpinSide(List<GameObject> side)
         {
             mRotation = Vector3.zero;
             Vector3 mouseOffset = (Input.mousePosition - mMouseRef);
@@ -114,7 +114,7 @@ namespace FieldScripts
             mMouseRef = Input.mousePosition;
         }
 
-        private void autoRotate()
+        private void AutoRotate()
         {
             mDragging = false;
             var step = mSpeed * Time.deltaTime;

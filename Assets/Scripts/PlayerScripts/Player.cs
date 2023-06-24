@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
 	    }
 	    else if(UnMove())
 	    {
+		    // 처리해야할 것 : 
 		    GameObject parent = transform.parent.gameObject;
 		    GameObject obj = this.gameObject;
 		    
